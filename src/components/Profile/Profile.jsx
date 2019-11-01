@@ -4,13 +4,14 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import Preloader from '../common/preloader/Preloader';
 
-const Profile = ({profile, status, updateStatus}) => {
-    if (!profile){
-        return <Preloader />
-    }
+const Profile = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
+    // if (!profile){
+    //     return <Preloader />
+    // }
     return (
         <div>
-            <ProfileInfo profile={profile} status={status} updateStatus={updateStatus}/>
+            <ProfileInfo savePhoto={savePhoto} isOwner={isOwner} profile={profile} status={status}
+                        updateStatus={updateStatus} saveProfile={saveProfile}/>
             <MyPostsContainer />
         </div>
     );
