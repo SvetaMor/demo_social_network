@@ -9,7 +9,7 @@ let mapStateToProps = (state) => {
     };
 };
 
-let mapDispatchToProps =() => { return {};};
+//let mapDispatchToProps =() => { return {};};
 
 const SideBarContainer = connect(mapStateToProps)(SideBar);
 

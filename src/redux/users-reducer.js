@@ -1,5 +1,7 @@
 import {usersAPI} from '../api/api';
 import {updateObjectInArray} from '../utils/object-helpers';
+//import {getUsers} from './users-selectors';
+import {userDefaultPhotos} from '../components/common/UserIcon/userIcon';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -8,16 +10,16 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
-//const GET_USERS_TUNK_CREATOR = 'GET_USERS_TUNK_CREATOR';
 
 let initialState={
     users: [],
-    pageSize:5,
-    portionSize:15,
+    pageSize:9,
+    portionSize:8,
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
-    followingInProgress: []
+    followingInProgress: [],
+    userPhotos: userDefaultPhotos
 };
 
 
@@ -49,15 +51,14 @@ const UsersReducer = (state = initialState, action) => {
             return {...state,
                 followingInProgress: action.isFetching
                 ? [...state.followingInProgress, action.userId]
-                : state.followingInProgress.filter(id=> id!=action.userId)}
+                : state.followingInProgress.filter(id=> id!==action.userId)}
         }
-
         default:
             return state;
     }
 }
 
-export const followSuccess =(userId) => ({type: FOLLOW, userId});
+export const followSuccess = (userId) => ({type: FOLLOW, userId});
 export const unfollowSuccess =(userId) => ({type: UNFOLLOW, userId});
 export const setUsers =(users) => ({type: SET_USERS, users});
 export const setCurrentPage =(currentPage) =>
@@ -74,6 +75,7 @@ export const getUsersThunkCreator =(page, pageSize) => {
         dispatch(toggleIsFetching(true));
         let data = await usersAPI.getUsers(page, pageSize);
         dispatch(setCurrentPage(page));
+
         dispatch(toggleIsFetching(false));
         dispatch(setUsers(data.items));
         dispatch(setTotalUsersCount(data.totalCount));
@@ -83,7 +85,7 @@ export const getUsersThunkCreator =(page, pageSize) => {
 const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
     dispatch(toggleFollowingProgress(true, userId));
     let response = await apiMethod(userId);
-    if (response.data.resultCode == 0) {
+    if (response.data.resultCode === 0) {
         dispatch(actionCreator(userId));
     }
     dispatch(toggleFollowingProgress(false, userId));

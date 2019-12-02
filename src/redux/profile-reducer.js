@@ -1,4 +1,4 @@
-import {usersAPI, profileAPI} from '../api/api';
+import {profileAPI, usersAPI} from '../api/api';
 import {stopSubmit} from 'redux-form';
 
 const ADD_POST='ADD-POST';
@@ -7,6 +7,7 @@ const SET_STATUS = 'SET_STATUS';
 const DELETE_POST ='DELETE_POST';
 const SAVE_PHOTO = 'SAVE_PHOTO';
 const SAVE_PROFILE = 'SAVE_PROFILE';
+const SET_FOLLOWED = 'SET_FOLLOWED';
 
 let initialState={
     posts: [
@@ -14,7 +15,8 @@ let initialState={
         {id: 2, message: 'It\'s my first post', likesCount:'50'}
     ],
     profile: null,
-    status: ""
+    status: "",
+    isFollowed: false
 };
 
 const profileReducer = (state=initialState, action) => {
@@ -44,7 +46,7 @@ const profileReducer = (state=initialState, action) => {
         case DELETE_POST: {
             return {
                 ...state,
-                posts: state.posts.filter(p => p.id != action.postId)
+                posts: state.posts.filter(p => p.id !== action.postId)
             }
         }
         case SAVE_PHOTO: {
@@ -59,6 +61,12 @@ const profileReducer = (state=initialState, action) => {
                 profile: {...state.profile}
             }
         }
+        case SET_FOLLOWED:{
+            return {
+                ...state,
+                isFollowed: action.isFollowed
+            }
+        }
         default:
             return state;
     }
@@ -70,14 +78,16 @@ export const setStatus = (status) => ({type: SET_STATUS, status});
 export const deletePost = (postId) => ({type: DELETE_POST, postId});
 export const savePhotoSuccess = (photos) => ({type: SAVE_PHOTO, photos});
 export const saveProfileSuccess = (profile) => ({type: SAVE_PROFILE, profile});
-
+const setFollowed = (isFollowed) => ({type: SET_FOLLOWED, isFollowed});
 
 export const profileThunkCreator = (userId) => async (dispatch) =>{
-    let response = await usersAPI.getProfile(userId);
+    let response = await profileAPI.getProfile(userId);
     dispatch(setUserProfile(response.data));
+    let isFollowed = await usersAPI.isFollowed(userId);
+    dispatch(setFollowed(isFollowed));
 }
 
-export const getStatus = (userId) => async (dispatch) => {
+export const getStatus = (userId) => async (dispatch) => { 
     let response = await profileAPI.getStatus(userId);
     dispatch(setStatus(response.data));
 }

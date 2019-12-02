@@ -1,17 +1,29 @@
 import React from 'react';
-import s from './Header.module.css';
-import {NavLink} from 'react-router-dom';
+import {Navbar, Nav, Button} from 'react-bootstrap';
+import Styles from './headerStyles';
 
-const Header =(props)=>{
+const Header = (props) => {
     return(
-        <header className={s.header}>
-            <img src='https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png'/>
-            <div className={s.loginBlock}>
-            {props.isAuth
-                ? (<div>{props.login} - <button onClick={props.logout}>Log out</button></div>)
-                : <NavLink to={'/login'}>Login</NavLink>}
-            </div>
-        </header>
+        <Styles>
+            <Navbar  expand="lg">
+                <img className="headerImg" alt=''
+                     src='https://upload.wikimedia.org/wikipedia/commons/a/ad/Figma-1-logo.png'/>
+                <Navbar.Brand href="/">New social network</Navbar.Brand>
+                <div className="ml-auto">
+                    {props.isAuth
+                        ? (<div>{props.login} - <Button variant="outline-warning"
+                                                        onClick={props.logout}>
+                                                        Log out
+                                                </Button>
+                            </div>)
+                        : <Nav.Item>
+                            <Nav.Link href='/login'>Login</Nav.Link>
+                          </Nav.Item>}
+                </div>
+            </Navbar>
+        </Styles>
+
+
     );
 }
 

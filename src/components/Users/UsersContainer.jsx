@@ -1,12 +1,13 @@
 import React from 'react';
 import Users from './Users';
-import * as axios from 'axios';
+//import * as axios from 'axios';
 import {follow, unfollow, setCurrentPage, toggleFollowingProgress, getUsersThunkCreator} from '../../redux/users-reducer';
 import {connect} from 'react-redux';
 import Preloader from '../common/preloader/Preloader.jsx';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import {getUsers, getPageSize, getPortionSize, getTotalUsersCount, getCurrentPage, getIsFetching, getFollowingInProgress} from '../../redux/users-selectors';
+
 
 let mapStateToProps = (state) =>{
     return {
@@ -31,7 +32,7 @@ class UsersContainer extends React.Component {
         const {pageSize} = this.props;
         this.props.getUsersThunkCreator(pageNumber, pageSize);
     }
-    render(){ 
+    render(){
         return <>
             {this.props.isFetching ? <Preloader/> : null}
             <Users totalUsersCount={this.props.totalUsersCount}
@@ -40,6 +41,7 @@ class UsersContainer extends React.Component {
             currentPage={this.props.currentPage} selectedPage={this.props.selectedPage}
             onPageChanged ={this.onPageChanged} isFetching={this.props.isFetching}
             follow={this.props.follow} unfollow={this.props.unfollow} users={this.props.users}
+
             toggleFollowingProgress={this.props.toggleFollowingProgress}
             followingInProgress={this.props.followingInProgress}
             />

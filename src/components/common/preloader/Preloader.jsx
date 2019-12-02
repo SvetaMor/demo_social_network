@@ -1,10 +1,15 @@
 import React from 'react';
-import preloader from '../../../assets/images/loader.gif';
+import {Spinner} from 'react-bootstrap';
 
 let Preloader = (props) => {
-    return <div>
-        <img src={preloader} />
-    </div>
+    return < >
+        <Spinner animation="grow" variant="primary" />
+        <Spinner animation="grow" variant="secondary" />
+        <Spinner animation="grow" variant="success" />
+        <Spinner animation="grow" variant="danger" />
+        <Spinner animation="grow" variant="warning" />
+        <Spinner animation="grow" variant="info" />
+    </>
 }
 
 export default Preloader;

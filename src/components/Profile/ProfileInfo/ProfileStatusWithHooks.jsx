@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import s from './ProfileInfo.module.css';
+import {FormControl} from 'react-bootstrap';
 
 const ProfileStatusWithHooks = (props) => {
 
@@ -24,19 +24,16 @@ const ProfileStatusWithHooks = (props) => {
     }
 
     return (
-        <div>
+        < >
             { !editMode &&
-                <div>
-                    <b>Status: </b><span onDoubleClick={activateEditMode}>{props.status || "-----"}</span>
-                </div>
+                <span onDoubleClick={activateEditMode}>
+                    {props.status || "-----"}</span>
             }
-            {editMode &&
-                <div>
-                    <input onBlur={deactivateEditMode} onChange={onStatusChange}
+            { editMode &&
+                <FormControl onBlur={deactivateEditMode} onChange={onStatusChange}
                             value={status} autoFocus={true} />
-                </div>
             }
-        </div>
+        </>
     );
 }
 

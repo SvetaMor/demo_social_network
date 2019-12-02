@@ -1,30 +1,38 @@
 import React from 'react';
-import classes from './Navbar.module.css';
-import {NavLink} from 'react-router-dom';
+import cn from 'classnames';
+import {Nav, Badge} from 'react-bootstrap';
+import Styles from './navbrStyles';
 
-const Navbar =()=>{
-    return(
-        <nav className={classes.nav}>
-            <div className={classes.item}>
-                <NavLink  to="/profile" activeClassName={classes.active}>
-                Profile</NavLink>
-            </div>
-            <div className={classes.item}>
-                <NavLink to="/dialogs" activeClassName={classes.active}>Messages</NavLink>
-            </div>
-            <div className={classes.item}>
-                <NavLink to="/users" activeClassName={classes.active}>Users</NavLink>
-            </div>
-            <div className={classes.item}>
-                <NavLink to="/news" activeClassName={classes.active}>News</NavLink>
-            </div>
-            <div className={classes.item}>
-                <NavLink to="/music" activeClassName={classes.active}>Music</NavLink>
-            </div >
-            <div className={classes.item}>
-                <NavLink to="/settings" activeClassName={classes.active}>Settings</NavLink>
-            </div>
-        </nav>
+const Navbar =({countNewElements, ...props})=>{
+
+    return(<Styles>
+        <Nav className={cn("flex-column", "nav-block")}  variant="tabs" justify
+              defaultActiveKey="/home">
+            <Nav.Item className="nav-item-block">
+                <Nav.Link href="/profile" >Profile</Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="nav-item-block">
+                <Nav.Link href="/dialogs" eventKey="/dialogs">Messages
+                    {(countNewElements>0)&&
+                        <Badge variant="success" className="newMessages">
+                            {countNewElements}
+                        </Badge>}
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="nav-item-block">
+                <Nav.Link href="/friends">Friends</Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="nav-item-block">
+                <Nav.Link href="/users">Users</Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="nav-item-block">
+                <Nav.Link href="/news">News</Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="nav-item-block">
+                <Nav.Link href="/settings">Settings</Nav.Link>
+            </Nav.Item>
+        </Nav>
+    </Styles>
     );
 }
 

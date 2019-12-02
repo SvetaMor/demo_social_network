@@ -1,23 +1,37 @@
-.dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
-}
-.dialogsItems{
+
+.dialogsItems {
     padding: 10px;
-    color: white;
+}
+.pointer {
+    cursor: pointer;
 }
 .dialog img {
     margin-left: 5px;
     margin-right: 10px;
-    height: 20px;
+    height: 40px;
     border-radius: 10px;
 }
 .messages {
     padding: 10px;
 }
 .messages .message {
-    color: white;
+
 }
 .dialogsItems .active {
     color: gold;
+}
+.newMessages {
+    color: SeaGreen;
+    border: solid 1px;
+    border-color: SeaGreen;
+    border-radius: 15px;
+    margin-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.newMessages:hover {
+    background-color: SeaGreen;
+    color: white;
 }

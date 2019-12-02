@@ -1,38 +1,16 @@
 import React from 'react';
-import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
-import Message from './Message/Message';
-import AddMessageForm from './AddMessageForm/AddMessageForm';
-//import {reduxForm} from 'redux-form';
+import defaultPhoto from '../../assets/images/avatars/avatar-icon-4.png';
 
 const Dialogs = (props) => {
-    //let dialogsPage = props.store.getState().dialogsPage;
-    let dialogsElements = props.dialogsPage.dialogs
-        .map(d => <DialogItem name={d.name} key={d.id} id={d.id} img={d.img}/>);
+    const dialogsElements = props.dialogsPage.dialogs
+        .map(d => <DialogItem name={d[0].fullName} key={d[0].userId}
+            id={d[0].userId} newMessagesCount={d[1]}
+            img={d[0].photos.small?d[0].photos.small:defaultPhoto}/>);
 
-    let messagesElements = props.dialogsPage.messages
-        .map(m => <Message key={m.id} message={m.message}/>);
-    //let newMessageBody = props.dialogsPage.newMessageBody;
-
-
-    let addNewMessage=(values)=>{
-        props.sendMessage(values.newMessageBody);
-    };
-
-    //if (!props.isAuth) return <Redirect to={'/login'} />;
-    return (
-            <div className={s.dialogs}>
-                <div className={s.dialogsItems}>
-                    {dialogsElements}
-                </div>
-                <div className={s.messages}>
-                    <div>
-                        {messagesElements}
-                    </div>
-                    <AddMessageForm onSubmit={addNewMessage} />
-                </div>
-            </div>
-    );
+    return <div>
+            {dialogsElements}
+        </div>
 }
 
 export default Dialogs;

@@ -4,9 +4,12 @@ const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-        "API-KEY": "59a7deb7-40fb-42a4-8c0b-90c264fc43d83"
+        "API-KEY": "1169b1b0-c852-4276-b653-e4b8ed86fe3e"
+        //"API-KEY": "fb2b16a6-cd6b-4f77-89a5-3fbfbb937043"
     }
 });
+
+
 
 export const usersAPI = {
     getUsers(currentPage=1, pageSize=10) {
@@ -15,16 +18,28 @@ export const usersAPI = {
             return response.data;
         });
     },
+    getListOfUsers() {
+        return instance.get(`users`)
+        .then(response => {
+            return response.data;
+        });
+    },
     unfollow(userId){
-        return instance.delete(`follow/${userId}`)
+        return instance.delete(`follow/${userId}`);
     },
     follow(userId){
-        return instance.post(`follow/${userId}`)
+        return instance.post(`follow/${userId}`);
     },
-    getProfile(userId){
-        console.warn('Obsolete method. Please use profileAPI object.');
-        return profileAPI.getProfile(userId);
-    }
+    isFollowed(userId){
+        return instance.get(`follow/${userId}`)
+        .then(response => {
+            return response.data;
+        });
+    }//,
+    // getProfile(userId){
+    //     console.warn('Obsolete method. Please use profileAPI object.');
+    //     return profileAPI.getProfile(userId);
+    // }
 }
 
 export const profileAPI = {
@@ -66,5 +81,32 @@ export const authAPI = {
 export const securityAPI = {
     getCaptchaUrl(){
         return instance.get('security/get-captcha-url');
+    }
+}
+
+export const dialogsAPI = {
+    getAllDialogs(){
+        return instance.get(`dialogs`);
+    },
+    startChatting(userId){
+        return instance.put(`dialogs/${userId}`, {userId});
+    },
+    getMessageFromFriend(userId, currentPage=1, pageSize=20){
+        return instance.get(`dialogs/${userId}/messages?page=${currentPage}&count=${pageSize}`);
+    },
+    sendMessageToFriend(userId, body){
+        return instance.post(`dialogs/${userId}/messages`, {userId, body});
+    },
+    isYourMessageViewed(messageId){
+        return instance.get(`dialogs/messages/${messageId}/viewed`);
+    },
+    deleteMessage(messageId){
+        return instance.delete(`dialogs/messages/${messageId}`);
+    },
+    restoreMessageFormDeleted(messageId){
+        return instance.put(`dialogs/messages/${messageId}/restore`);
+    },
+    getCountNewMessage(){
+        return instance.get(`dialogs/messages/new/count`);
     }
 }

@@ -4,9 +4,14 @@
     padding: 20px;
 }
 .item a{
-    color: red;
+    color: green;
     text-decoration: none;
 }
-.item a.active{
+a.active{
     color: brown;
+    background-color: yellow;
+}
+
+a.active{
+    color: red;
 }
