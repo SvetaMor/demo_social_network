@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://svetamor.github.io/demo_social_network",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
     "dateformat": "^3.0.3",
